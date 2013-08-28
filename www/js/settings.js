@@ -1,0 +1,1 @@
+var WebServicesUrl = "http://news.consines.com/";
