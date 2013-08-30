@@ -4,7 +4,7 @@
     <description>
         News alerts notifications straight to your device
     </description>
-    <author email="rishabhjivan@gmail.com" href="http://www.rishabhjivan.com">
+    <author email="rishabhjivan@gmail.com" href="http://www.rishabhjivan.com/">
         Rishabh Jivan
     </author>
     <feature name="http://api.phonegap.com/1.0/device" />
