@@ -1,23 +1,6 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
 var app = {
-    // Application Constructor
+    RegID: "",
+	// Application Constructor
     initialize: function() {
         this.bindEvents();
     },
@@ -66,9 +49,10 @@ var app = {
             case 'registered':
                 if ( e.regid.length > 0 )
                 {
-                    console.log("Regid " + e.regid);
+                    RegID = e.regid;
+					console.log("Regid " + e.regid);
 					$.post(WebServicesUrl + 'Device/', { Type: "Android", Id: e.regid },
-					function (data) {}, 'json');
+					function (data) {InitMain();}, 'json');
                 }
             break;
  
@@ -102,3 +86,16 @@ var app = {
         }
     }
 };
+function InitMain() {
+	$.get(WebServicesUrl + 'Categories/', {},
+	function (data) {
+		console.log(data);
+		$("#divSplash").hide();$("#divHeader").show();$("#divMain").show();
+		console.log(data.List.length);
+		$.each(data.List, function (i, item) {
+			$("#divContainer").append('<div data-role="collapsible" data-inset="false" data-id="' + item.Id + '" data-theme="c">' +
+				'<h3>' + item.Name + '</h3><div id="divFeeds-' + item.Id + '"></div></div>');
+		});
+		$("#divContainer").trigger('create');
+	}, 'json');
+}

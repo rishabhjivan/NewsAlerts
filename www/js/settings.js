@@ -1,1 +1,1 @@
-var WebServicesUrl = "http://news.consines.com/";
+var WebServicesUrl = "http://news.consines.com/";//"http://localhost/NewsAlerts/";
