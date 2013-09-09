@@ -1,5 +1,6 @@
 var app = {
-    RegID: "",
+    RegID: "APA91bF6q48SYxLufxTEr6pLi6IQkSNGnGbII800BDl4BLd9ElsrJy4vfOv0P1yx4AyjI5Cuc2OqGMp3pdKc0N2irx74LnD9OKDytndnthAVk3nmYQqli0IsRr24yBeyK0GTEHjomsPidnOqh1YwO09b8bZl5QmYcA",
+	SelectedFeeds: new Array(),
 	// Application Constructor
     initialize: function() {
         this.bindEvents();
@@ -89,13 +90,40 @@ var app = {
 function InitMain() {
 	$.get(WebServicesUrl + 'Categories/', {},
 	function (data) {
-		console.log(data);
 		$("#divSplash").hide();$("#divHeader").show();$("#divMain").show();
-		console.log(data.List.length);
 		$.each(data.List, function (i, item) {
 			$("#divContainer").append('<div data-role="collapsible" data-inset="false" data-id="' + item.Id + '" data-theme="c">' +
-				'<h3>' + item.Name + '</h3><div id="divFeeds-' + item.Id + '"></div></div>');
+				'<h3 onclick="LoadFeeds(' + item.Id + ');">' + item.Name + '</h3><div id="divFeeds-' + item.Id + '" data-loaded="0"></div></div>');
 		});
 		$("#divContainer").trigger('create');
+	}, 'json');
+	$.get(WebServicesUrl + 'Feed/', { DeviceId: app.RegID },
+	function (data) {
+		app.SelectedFeeds = data.List;
+	}, 'json');
+}
+function LoadFeeds(categoryId) {
+	if ($("#divFeeds-" + categoryId).attr("data-loaded") == 0) {
+	$.get(WebServicesUrl + 'Feeds/' + categoryId, {},
+	function (data) {
+		$("#divFeeds-" + categoryId).attr("data-loaded", 1);
+		$.each(data.List, function (i, item) {
+			$("#divFeeds-" + categoryId).append(
+				'<input id="chkFeed-' + item.Id + '" type="checkbox" onchange="FeedChecked(' + item.Id + ');" /><label for="chkFeed-' + item.Id + '">' + item.Name + '</label>');
+		});
+		$.each(app.SelectedFeeds, function (i, item) {if ($("#chkFeed-" + item).length > 0) $("#chkFeed-" + item).prop("checked", true);});
+		$("#divFeeds-" + categoryId).trigger('create');
+	}, 'json');
+	}
+}
+function FeedChecked(feedId) {
+	var checked = $("#chkFeed-" + feedId).is(":checked");
+	$.post(WebServicesUrl + 'Feed/' + feedId, { DeviceId: app.RegID, Value: checked }, 
+	function (data) {
+		if (checked) app.SelectedFeeds[app.SelectedFeeds.length] = feedId;
+		else {
+			var index = app.SelectedFeeds.indexOf(feedId);
+			app.SelectedFeeds.splice(feedId, 1);
+		}
 	}, 'json');
 }
