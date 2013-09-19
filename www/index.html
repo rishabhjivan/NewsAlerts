@@ -21,7 +21,7 @@
     </head>
     <body>
 		<form id="form1">
-			<div data-role="page" data-ajax="false">
+			<div data-role="page" id="mainpage" data-ajax="false">
 				<div id="divSplash" class="app">
 					<h1>News Alerts!</h1>
 					<div id="deviceready" class="blink">
@@ -29,16 +29,19 @@
 						<p class="event received">Device is Ready</p>
 					</div>
 				</div>
-				<div data-role="panel" id="divSettings" data-position="left" data-display="overlay">
-					<div id="divSelectFeeds"></div>
-				</div>
 				<div id="divHeader" data-role="header" style="overflow:hidden;display:none">
 					<h2><img src="img/logo.png" width="64" border="0" style="margin-bottom:5px;" align="middle" /> News Alerts!</h2>
-					<a href="#divSettings" data-icon="gear" class="ui-btn-right">Settings</a>
+					<a href="#divSettings" data-icon="gear" class="ui-btn-right" data-transition="slideup">Settings</a>
 				</div>
 				<div id="divMain" data-role="content" style="display:none">
 					<ul id="ulLiveFeeds" data-role="listview">
 				</div>
+			</div>
+			<div data-role="page" id="divSettings">
+				<div id="divSelectFeeds"></div>
+				<a href="#mainpage" data-inline="true" data-direction="reverse" data-transition="slidedown" data-icon="arrow-l" data-iconpos="left">
+					Back
+				</a>
 			</div>
 		</form>
     </body>
