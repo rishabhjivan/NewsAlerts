@@ -129,3 +129,14 @@ function FeedChecked(feedId) {
 		}
 	}, 'json');
 }
+function ToggleSettings() {
+	if ($("#divSettings").is(":visible")) {
+		$("#divSettings").hide();
+		$("#divMain").show();
+		$("#settingsLink").html("Show Settings");
+	} else {
+		$("#divSettings").show();
+		$("#divMain").hide();
+		$("#settingsLink").html("Hide Settings");
+	}
+}
