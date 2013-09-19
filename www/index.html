@@ -29,11 +29,15 @@
 						<p class="event received">Device is Ready</p>
 					</div>
 				</div>
+				<div data-role="panel" id="divSettings" data-position="left" data-display="overlay">
+					<div id="divSelectFeeds"></div>
+				</div>
 				<div id="divHeader" data-role="header" style="overflow:hidden;display:none">
 					<h2><img src="img/logo.png" width="64" border="0" style="margin-bottom:5px;" align="middle" /> News Alerts!</h2>
+					<a href="#divSettings" data-icon="gear" class="ui-btn-right">Settings</a>
 				</div>
 				<div id="divMain" data-role="content" style="display:none">
-					<div id="divContainer"></div>
+					<ul id="ulLiveFeeds" data-role="listview">
 				</div>
 			</div>
 		</form>

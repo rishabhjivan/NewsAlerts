@@ -59,7 +59,9 @@ var app = {
  
             case 'message':
               // this is the actual push notification. its format depends on the data model from the push server
-              alert('message = '+e.message+' msgcnt = '+e.msgcnt);
+              //alert('message = '+e.message+' msgcnt = '+e.msgcnt);
+			  $("#ulLiveFeeds").prepend('<li><a href="#">' + e.message + '</a></li>');
+				$("#ulLiveFeeds").trigger('create');
             break;
  
             case 'error':
@@ -92,10 +94,10 @@ function InitMain() {
 	function (data) {
 		$("#divSplash").hide();$("#divHeader").show();$("#divMain").show();
 		$.each(data.List, function (i, item) {
-			$("#divContainer").append('<div data-role="collapsible" data-inset="false" data-id="' + item.Id + '" data-theme="c">' +
+			$("#divSelectFeeds").append('<div data-role="collapsible" data-inset="false" data-id="' + item.Id + '" data-theme="c">' +
 				'<h3 onclick="LoadFeeds(' + item.Id + ');">' + item.Name + '</h3><div id="divFeeds-' + item.Id + '" data-loaded="0"></div></div>');
 		});
-		$("#divContainer").trigger('create');
+		$("#divSelectFeeds").trigger('create');
 	}, 'json');
 	$.get(WebServicesUrl + 'Feed/', { DeviceId: app.RegID },
 	function (data) {
